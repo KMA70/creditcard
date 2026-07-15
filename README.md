@@ -284,7 +284,3 @@ Contributions are welcome! Feel free to:
 ## 📧 Contact
 
 For questions or collaboration opportunities, reach out via GitHub or email.
-
----
-
-**Made with IBM Bob** 🚀

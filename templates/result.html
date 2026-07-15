@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prediction Result – Credit Card Approval</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <h1>&#x1F4B3; Credit Card Approval System</h1>
+      <p class="subtitle">AI-powered instant eligibility screening</p>
+    </div>
+  </header>
+
+  <main>
+    {% if error %}
+    <!-- ── Error state ──────────────────────────────────────────────── -->
+    <section class="card result-card error-card">
+      <h2>&#x26A0; Prediction Error</h2>
+      <p class="error-msg">{{ error }}</p>
+      <a href="/" class="btn-primary">&#x2190; Try Again</a>
+    </section>
+
+    {% else %}
+    <!-- ── Decision banner ──────────────────────────────────────────── -->
+    <section class="card result-card {{ 'approved-card' if approved else 'rejected-card' }}">
+      <div class="decision-icon">{{ '✅' if approved else '❌' }}</div>
+      <h2 class="decision-label">{{ 'APPROVED' if approved else 'REJECTED' }}</h2>
+      <p class="decision-sub">
+        {% if approved %}
+          This applicant meets the eligibility criteria for a credit card.
+        {% else %}
+          This applicant does not meet the current eligibility criteria.
+        {% endif %}
+      </p>
+
+      <!-- Probability bar -->
+      <div class="prob-section">
+        <div class="prob-row">
+          <span>Approval probability</span>
+          <strong class="prob-value approved-text">{{ prob_approved }}%</strong>
+        </div>
+        <div class="prob-bar-bg">
+          <div class="prob-bar-fill approved-fill" style="width: {{ prob_approved }}%;"></div>
+        </div>
+
+        <div class="prob-row" style="margin-top:10px;">
+          <span>Rejection probability</span>
+          <strong class="prob-value rejected-text">{{ prob_rejected }}%</strong>
+        </div>
+        <div class="prob-bar-bg">
+          <div class="prob-bar-fill rejected-fill" style="width: {{ prob_rejected }}%;"></div>
+        </div>
+      </div>
+
+      <!-- Confidence badge -->
+      <div class="confidence-badge confidence-{{ confidence | lower }}">
+        Confidence: {{ confidence }}
+      </div>
+
+      <p class="model-note">Predicted by <em>{{ model_name }}</em></p>
+    </section>
+
+    <!-- ── Applicant summary ─────────────────────────────────────────── -->
+    <section class="card summary-card">
+      <h2>Applicant Summary</h2>
+      <table class="summary-table">
+        <tbody>
+          {% for field, value in applicant.items() %}
+          <tr>
+            <th>{{ field }}</th>
+            <td>{{ value }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ── Risk guidance ─────────────────────────────────────────────── -->
+    <section class="card guidance-card">
+      <h2>Risk Guidance</h2>
+      {% if approved %}
+        <ul class="guidance-list good">
+          <li>Application can proceed to the next review stage.</li>
+          <li>Verify identity documents before final issuance.</li>
+          <li>Consider credit limit based on income and debt ratio.</li>
+        </ul>
+      {% else %}
+        <ul class="guidance-list bad">
+          <li>Applicant flagged as high-risk — manual review recommended.</li>
+          <li>Check prior default status and outstanding loan balances.</li>
+          <li>Applicant may re-apply after 6 months with improved credit profile.</li>
+        </ul>
+      {% endif %}
+    </section>
+    {% endif %}
+
+    <div class="back-row">
+      <a href="/" class="btn-secondary">&#x2190; New Application</a>
+    </div>
+  </main>
+
+  <footer>Made with IBM Bob</footer>
+</body>
+</html>

@@ -1,0 +1,280 @@
+/* ── Reset & base ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #1f2328;
+  background: #f0f2f5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ───────────────────────────────────────────────────────────────── */
+header {
+  background: #1a2b4a;
+  color: #ffffff;
+  padding: 28px 24px 22px;
+  text-align: center;
+}
+.header-inner { max-width: 860px; margin: auto; }
+
+header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+header .subtitle {
+  color: #a8bbd4;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+.model-badge {
+  display: inline-block;
+  margin-top: 12px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 20px;
+  padding: 4px 16px;
+  font-size: 0.82rem;
+  color: #d0e0f0;
+}
+
+/* ── Main layout ──────────────────────────────────────────────────────────── */
+main {
+  flex: 1;
+  max-width: 880px;
+  width: 100%;
+  margin: 32px auto;
+  padding: 0 16px;
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────────── */
+.card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 28px 32px;
+  margin-bottom: 24px;
+}
+.card h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+  color: #1a2b4a;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 10px;
+}
+
+/* ── Model comparison table ───────────────────────────────────────────────── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+thead th {
+  background: #f0f4f8;
+  color: #1a2b4a;
+  text-align: left;
+  padding: 9px 14px;
+  font-weight: 600;
+  border-bottom: 2px solid #d0d7de;
+}
+tbody td, tbody th {
+  padding: 9px 14px;
+  border-bottom: 1px solid #eaedf0;
+}
+tbody tr:last-child td, tbody tr:last-child th { border-bottom: none; }
+tbody tr:hover { background: #f7f8fa; }
+.best-row { background: #eef6ff; font-weight: 600; }
+
+/* ── Form ─────────────────────────────────────────────────────────────────── */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-bottom: 28px;
+}
+fieldset {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px 18px;
+}
+legend {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #3b82d4;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0 6px;
+}
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.86rem;
+  color: #444c56;
+  margin-top: 14px;
+  font-weight: 500;
+}
+label:first-of-type { margin-top: 12px; }
+
+input[type="text"],
+input[type="number"],
+select {
+  padding: 8px 10px;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #1f2328;
+  background: #fff;
+  transition: border-color 0.15s;
+  width: 100%;
+}
+input:focus, select:focus {
+  outline: none;
+  border-color: #3b82d4;
+  box-shadow: 0 0 0 3px rgba(59,130,212,0.12);
+}
+
+/* ── Buttons ──────────────────────────────────────────────────────────────── */
+.btn-primary {
+  background: #1a2b4a;
+  color: #ffffff;
+  border: none;
+  border-radius: 7px;
+  padding: 11px 28px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.15s;
+}
+.btn-primary:hover { background: #253d6a; }
+
+.btn-secondary {
+  background: transparent;
+  color: #1a2b4a;
+  border: 1px solid #1a2b4a;
+  border-radius: 7px;
+  padding: 10px 24px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.15s, color 0.15s;
+}
+.btn-secondary:hover { background: #1a2b4a; color: #fff; }
+
+.submit-row { display: flex; gap: 14px; align-items: center; }
+.back-row   { text-align: center; margin-top: 8px; }
+
+/* ── Result card ──────────────────────────────────────────────────────────── */
+.result-card { text-align: center; }
+.decision-icon { font-size: 3.5rem; margin-bottom: 8px; }
+.decision-label {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  border: none;
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+}
+.decision-sub {
+  color: #57606a;
+  font-size: 0.95rem;
+  margin-bottom: 24px;
+}
+
+.approved-card  { border-top: 5px solid #22c55e; }
+.rejected-card  { border-top: 5px solid #ef4444; }
+.approved-card .decision-label { color: #16a34a; }
+.rejected-card .decision-label { color: #dc2626; }
+
+/* ── Probability bars ─────────────────────────────────────────────────────── */
+.prob-section { max-width: 460px; margin: 0 auto 20px; text-align: left; }
+.prob-row     { display: flex; justify-content: space-between; font-size: 0.88rem; }
+.prob-value   { font-size: 1rem; }
+.approved-text { color: #16a34a; }
+.rejected-text { color: #dc2626; }
+
+.prob-bar-bg {
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 99px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+.prob-bar-fill { height: 100%; border-radius: 99px; transition: width 0.5s; }
+.approved-fill { background: #22c55e; }
+.rejected-fill { background: #ef4444; }
+
+/* ── Confidence badge ─────────────────────────────────────────────────────── */
+.confidence-badge {
+  display: inline-block;
+  border-radius: 20px;
+  padding: 4px 18px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 14px;
+  border: 1px solid;
+}
+.confidence-high     { color: #16a34a; border-color: #22c55e; background: #f0fdf4; }
+.confidence-moderate { color: #ca8a04; border-color: #facc15; background: #fefce8; }
+.confidence-low      { color: #dc2626; border-color: #ef4444; background: #fef2f2; }
+
+.model-note { font-size: 0.8rem; color: #57606a; margin-top: 6px; }
+
+/* ── Summary table (result page) ──────────────────────────────────────────── */
+.summary-table { width: 100%; }
+.summary-table th {
+  width: 38%;
+  text-align: left;
+  font-weight: 600;
+  color: #57606a;
+  font-size: 0.86rem;
+  padding: 8px 12px;
+  background: #f7f8fa;
+  border-bottom: 1px solid #e5e7eb;
+}
+.summary-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.9rem;
+}
+
+/* ── Guidance list ────────────────────────────────────────────────────────── */
+.guidance-list { padding-left: 18px; }
+.guidance-list li { margin-bottom: 6px; font-size: 0.9rem; }
+.guidance-list.good li { color: #15803d; }
+.guidance-list.bad  li { color: #b91c1c; }
+
+/* ── Error ────────────────────────────────────────────────────────────────── */
+.error-card { border-top: 5px solid #f59e0b; }
+.error-msg  { color: #92400e; background: #fffbeb; border: 1px solid #fcd34d;
+              border-radius: 6px; padding: 12px 16px; margin-bottom: 20px;
+              font-size: 0.9rem; }
+
+/* ── Footer ───────────────────────────────────────────────────────────────── */
+footer {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #8b949e;
+  padding: 16px 0 20px;
+  border-top: 1px solid #e5e7eb;
+  margin-top: auto;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 580px) {
+  .card { padding: 20px 16px; }
+  header h1 { font-size: 1.3rem; }
+  .form-grid { grid-template-columns: 1fr; }
+  .decision-label { font-size: 1.5rem; }
+}

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Credit Card Approval System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <h1>&#x1F4B3; Credit Card Approval System</h1>
+      <p class="subtitle">AI-powered instant eligibility screening</p>
+      <div class="model-badge">
+        Active model: <strong>{{ model_name }}</strong> &nbsp;|&nbsp; ROC-AUC: <strong>{{ model_auc }}</strong>
+      </div>
+    </div>
+  </header>
+
+  <!-- Model comparison table -->
+  <main>
+    <section class="card model-table-section">
+      <h2>Model Performance Comparison</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Algorithm</th>
+            <th>Accuracy</th>
+            <th>ROC-AUC</th>
+            <th>CV ROC-AUC</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for name, scores in all_results.items() %}
+          <tr class="{{ 'best-row' if name == model_name else '' }}">
+            <td>{{ name }}{% if name == model_name %} &#10003;{% endif %}</td>
+            <td>{{ "%.4f"|format(scores.accuracy) }}</td>
+            <td>{{ "%.4f"|format(scores.roc_auc) }}</td>
+            <td>{{ "%.4f"|format(scores.cv_roc_auc) }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Application form -->
+    <section class="card form-section">
+      <h2>Applicant Details</h2>
+      <form action="/predict" method="POST" novalidate>
+
+        <div class="form-grid">
+
+          <!-- Personal -->
+          <fieldset>
+            <legend>Personal Information</legend>
+
+            <label>Gender
+              <select name="gender" required>
+                <option value="">Select…</option>
+                <option value="a">Male (a)</option>
+                <option value="b">Female (b)</option>
+              </select>
+            </label>
+
+            <label>Age (years)
+              <input type="number" name="age" min="18" max="100" step="0.01"
+                     placeholder="e.g. 35.5" required />
+            </label>
+
+            <label>Marital Status
+              <select name="married" required>
+                <option value="">Select…</option>
+                <option value="u">Unmarried (u)</option>
+                <option value="y">Married (y)</option>
+                <option value="l">Other (l)</option>
+              </select>
+            </label>
+
+            <label>Citizen Status
+              <select name="citizen" required>
+                <option value="">Select…</option>
+                <option value="g">ByBirth (g)</option>
+                <option value="p">ByOtherMeans (p)</option>
+                <option value="s">Temporary (s)</option>
+              </select>
+            </label>
+
+            <label>Driver's Licence
+              <select name="drivers_license" required>
+                <option value="">Select…</option>
+                <option value="t">Yes (t)</option>
+                <option value="f">No (f)</option>
+              </select>
+            </label>
+
+            <label>Zip / Post Code
+              <input type="text" name="zip_code" placeholder="e.g. 00202" required />
+            </label>
+          </fieldset>
+
+          <!-- Financial -->
+          <fieldset>
+            <legend>Financial Profile</legend>
+
+            <label>Annual Income ($)
+              <input type="number" name="income" min="0" step="1"
+                     placeholder="e.g. 50000" required />
+            </label>
+
+            <label>Existing Debt ($)
+              <input type="number" name="debt" min="0" step="0.01"
+                     placeholder="e.g. 1200.50" required />
+            </label>
+
+            <label>Credit Score
+              <input type="number" name="credit_score" min="0" step="1"
+                     placeholder="e.g. 1" required />
+            </label>
+
+            <label>Bank Customer?
+              <select name="bank_customer" required>
+                <option value="">Select…</option>
+                <option value="g">Yes (g)</option>
+                <option value="p">No (p)</option>
+                <option value="gg">Premium (gg)</option>
+              </select>
+            </label>
+
+            <label>Prior Default?
+              <select name="prior_default" required>
+                <option value="">Select…</option>
+                <option value="t">Yes (t)</option>
+                <option value="f">No (f)</option>
+              </select>
+            </label>
+          </fieldset>
+
+          <!-- Employment -->
+          <fieldset>
+            <legend>Employment &amp; Background</legend>
+
+            <label>Years Employed
+              <input type="number" name="years_employed" min="0" step="0.01"
+                     placeholder="e.g. 5.0" required />
+            </label>
+
+            <label>Currently Employed?
+              <select name="employed" required>
+                <option value="">Select…</option>
+                <option value="t">Yes (t)</option>
+                <option value="f">No (f)</option>
+              </select>
+            </label>
+
+            <label>Education Level
+              <select name="education_level" required>
+                <option value="">Select…</option>
+                <option value="c">c</option>
+                <option value="d">d</option>
+                <option value="cc">cc</option>
+                <option value="i">i</option>
+                <option value="j">j</option>
+                <option value="k">k</option>
+                <option value="m">m</option>
+                <option value="r">r</option>
+                <option value="q">q</option>
+                <option value="w">w</option>
+                <option value="x">x</option>
+                <option value="e">e</option>
+                <option value="aa">aa</option>
+                <option value="ff">ff</option>
+              </select>
+            </label>
+
+            <label>Ethnicity
+              <select name="ethnicity" required>
+                <option value="">Select…</option>
+                <option value="v">v</option>
+                <option value="h">h</option>
+                <option value="bb">bb</option>
+                <option value="j">j</option>
+                <option value="n">n</option>
+                <option value="z">z</option>
+                <option value="dd">dd</option>
+                <option value="ff">ff</option>
+                <option value="o">o</option>
+              </select>
+            </label>
+          </fieldset>
+
+        </div><!-- /form-grid -->
+
+        <div class="submit-row">
+          <button type="submit" class="btn-primary">&#x26A1; Check Eligibility</button>
+          <button type="reset"  class="btn-secondary">Clear</button>
+        </div>
+
+      </form>
+    </section>
+  </main>
+
+  <footer>Made with IBM Bob</footer>
+</body>
+</html>

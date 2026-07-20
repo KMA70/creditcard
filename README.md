@@ -20,9 +20,9 @@ This project **automates credit card approval decisions** using machine learning
 
 - **Flask Web Application:** Intuitive UI for real-time credit card eligibility predictions.
 
-- **IBM Watson ML Deployment:** Cloud deployment pipeline for scalable, production-ready inference.
+- **Local Deployment:** Runs entirely on your machine — no cloud account or external service required.
 
-- **Feature Engineering Pipeline:** Multi-class payment status codes converted to binary labels, handling missing values and categorical encoding.
+- **Feature Engineering Pipeline:** Handles missing values and categorical encoding end-to-end inside a scikit-learn Pipeline.
 
 ---
 
@@ -32,25 +32,26 @@ This project **automates credit card approval decisions** using machine learning
 credit_card_approval/
 │
 ├── data/
-│   └── crx.data                 # UCI Credit Card Approval dataset
+│   └── crx.data                         # UCI Credit Card Approval dataset
 │
 ├── models/
-│   ├── best_model.pkl           # Trained best model (auto-generated)
-│   └── model_meta.pkl           # Model metadata (auto-generated)
+│   ├── best_model.pkl                   # Trained best model (auto-generated)
+│   ├── model_meta.pkl                   # Model metadata (auto-generated)
+│   └── scoring_payload_example.json     # Example prediction payload
 │
 ├── templates/
-│   ├── index.html               # Application form
-│   └── result.html              # Prediction result page
+│   ├── index.html                       # Application form
+│   └── result.html                      # Prediction result page
 │
 ├── static/
 │   └── css/
-│       └── style.css            # Stylesheet
+│       └── style.css                    # Stylesheet
 │
-├── train_model.py               # Model training pipeline
-├── app.py                       # Flask web application
-├── deploy_watson.py             # Watson ML deployment script
-├── requirements.txt             # Python dependencies
-└── README.md                    # Project documentation
+├── train_model.py                       # Model training pipeline
+├── app.py                               # Flask web application
+├── export_model.py                      # Local model validation & export
+├── requirements.txt                     # Python dependencies
+└── README.md                            # Project documentation
 ```
 
 ---
@@ -74,9 +75,10 @@ credit_card_approval/
    pip install -r requirements.txt
    ```
 
-3. **Download the UCI Credit Card Approval dataset:**
-   - Visit: https://archive.ics.uci.edu/ml/datasets/credit+approval
-   - Download `crx.data` and place it in the `data/` folder.
+3. **Ensure the dataset is present:**
+   - The file `data/crx.data` (UCI Credit Card Approval dataset) must exist.
+   - If missing, download from: https://archive.ics.uci.edu/ml/datasets/credit+approval
+   - Place `crx.data` in the `data/` folder.
 
 ---
 
@@ -142,7 +144,7 @@ http://localhost:5000
 - `GET /` — Application form page
 - `POST /predict` — HTML prediction result
 - `POST /api/predict` — JSON prediction endpoint
-- `GET /health` — Health check (useful for monitoring)
+- `GET /health` — Health check
 
 **JSON API Example:**
 ```bash
@@ -179,48 +181,18 @@ curl -X POST http://localhost:5000/api/predict \
 
 ---
 
-## ☁️ IBM Watson ML Deployment
+## 🔍 Validating the Trained Model Locally
 
-Deploy the trained model to IBM Watson Machine Learning for production-scale inference.
-
-### Prerequisites:
-
-1. IBM Cloud account with Watson Machine Learning service provisioned.
-2. Create a deployment space and note:
-   - API Key
-   - Instance ID
-   - Space ID
-   - Region (e.g., `us-south`, `eu-de`)
-
-### Deployment Steps:
-
-1. **Set environment variables:**
-   ```bash
-   export WML_API_KEY="your-ibm-cloud-api-key"
-   export WML_INSTANCE_ID="your-wml-instance-id"
-   export WML_SPACE_ID="your-deployment-space-id"
-   export WML_LOCATION="us-south"
-   ```
-
-2. **Run the deployment script:**
-   ```bash
-   python deploy_watson.py
-   ```
-
-3. **Output:**
-   - Model uploaded to WML repository
-   - Online deployment endpoint created
-   - Scoring URL and sample curl command printed
-
-### Testing the Cloud Endpoint:
+Use the export script to verify saved artefacts and run a sample prediction:
 
 ```bash
-curl -X POST \
-  -H "Authorization: Bearer $IBM_CLOUD_IAM_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"input_data": [{"fields": [...], "values": [[...]]}]}' \
-  https://us-south.ml.cloud.ibm.com/ml/v4/deployments/{deployment_uid}/predictions
+python export_model.py
 ```
+
+**Output:**
+- Performance summary table for all four classifiers
+- Sample applicant prediction printed to console
+- `models/scoring_payload_example.json` written with input + output
 
 ---
 
@@ -262,7 +234,6 @@ A prospective customer uses the web application to enter personal and financial 
 - **scikit-learn** — ML algorithms and preprocessing
 - **Flask** — Web framework
 - **pandas & NumPy** — Data manipulation
-- **IBM Watson Machine Learning** — Cloud deployment
 - **HTML/CSS** — Frontend UI
 
 ---
@@ -284,3 +255,8 @@ Contributions are welcome! Feel free to:
 ## 📧 Contact
 
 For questions or collaboration opportunities, reach out via GitHub or email.
+
+---
+
+**Made with IBM Bob** 🚀
+

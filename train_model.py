@@ -9,7 +9,7 @@ Trains four classifiers on the UCI Credit Card Approval dataset:
 
 The best model (by ROC-AUC) is serialised to models/best_model.pkl together
 with the fitted pre-processing pipeline (models/preprocessor.pkl) so that the
-Flask app and the Watson ML deployment script can load them without touching
+Flask app and the export script can load them without touching
 the raw training data.
 
 Dataset columns assumed (based on the anonymised UCI set):
@@ -154,7 +154,7 @@ for name, clf in classifiers.items():
 
     results[name] = {"accuracy": acc, "roc_auc": auc, "cv_roc_auc": cv_auc}
 
-    print(f"{'─'*55}")
+    print("-" * 55)
     print(f"  {name}")
     print(f"  Accuracy : {acc:.4f}")
     print(f"  ROC-AUC  : {auc:.4f}  (CV mean: {cv_auc:.4f})")
@@ -187,7 +187,7 @@ meta = {
 with open(meta_path, "wb") as f:
     pickle.dump(meta, f)
 
-print(f"{'═'*55}")
+print("=" * 55)
 print(f"  Best model : {best_name}")
 print(f"  ROC-AUC    : {best_auc:.4f}")
 print(f"  Saved to   : {model_path}")
@@ -196,6 +196,7 @@ print(f"  Metadata   : {meta_path}")
 # ─────────────────────────────────────────────
 # 8.  Summary table
 # ─────────────────────────────────────────────
-print("\n  ── Summary ──")
+print("\n  -- Summary --")
 summary_df = pd.DataFrame(results).T.sort_values("roc_auc", ascending=False)
 print(summary_df.to_string())
+

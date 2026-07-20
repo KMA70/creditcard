@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prerequisites – Credit Card Approval System</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+      font-size: 14px; line-height: 1.7; color: #1f2328; background: #fff;
+      max-width: 860px; margin: 40px auto; padding: 0 32px 60px;
+    }
+    h1 { font-size: 1.6rem; font-weight: 700; color: #1a2b4a; margin-bottom: 6px; }
+    h2 { font-size: 1.15rem; font-weight: 600; color: #1a2b4a; margin: 32px 0 12px; border-bottom: 2px solid #e5e7eb; padding-bottom: 6px; }
+    h3 { font-size: 1rem; font-weight: 600; color: #3b82d4; margin: 20px 0 8px; }
+    p  { margin-bottom: 10px; color: #444c56; }
+    ul, ol { padding-left: 22px; margin-bottom: 14px; }
+    li { margin-bottom: 6px; color: #444c56; }
+    .subtitle { color: #57606a; font-size: 0.9rem; margin-bottom: 28px; }
+    .req-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+    .req-card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px 20px; background: #f7f8fa; }
+    .req-card h3 { margin-top: 0; }
+    .badge { display: inline-block; border-radius: 4px; padding: 2px 9px; font-size: 0.75rem; font-weight: 600; }
+    .badge-required { background: #fce7f3; color: #9d174d; }
+    .badge-optional { background: #dbeafe; color: #1e40af; }
+    code { background: #f0f4f8; border: 1px solid #d0d7de; border-radius: 4px; padding: 1px 6px; font-family: "Cascadia Code", "Consolas", monospace; font-size: 0.88em; color: #1f2328; }
+    pre  { background: #f0f4f8; border: 1px solid #d0d7de; border-radius: 6px; padding: 14px 16px; font-family: "Cascadia Code", "Consolas", monospace; font-size: 0.86em; overflow-x: auto; margin: 12px 0 18px; line-height: 1.55; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin-bottom: 20px; }
+    thead th { background: #f0f4f8; color: #1a2b4a; text-align: left; padding: 9px 12px; font-weight: 600; border-bottom: 2px solid #d0d7de; }
+    tbody td { padding: 8px 12px; border-bottom: 1px solid #eaedf0; }
+    tbody tr:last-child td { border-bottom: none; }
+    .note { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 6px; padding: 12px 16px; color: #92400e; font-size: 0.88rem; margin: 14px 0; }
+    footer { text-align: center; font-size: 0.75rem; color: #8b949e; padding-top: 32px; border-top: 1px solid #e5e7eb; margin-top: 48px; }
+  </style>
+</head>
+<body>
+
+  <h1>Prerequisites</h1>
+  <p class="subtitle">Credit Card Approval System &nbsp;|&nbsp; Setup Requirements &amp; Environment Guide</p>
+
+  <!-- ────────────────────────────────────────────────────────────────── -->
+  <h2>1. System Requirements</h2>
+  <div class="req-grid">
+    <div class="req-card">
+      <h3>Operating System <span class="badge badge-required">Required</span></h3>
+      <ul>
+        <li>Windows 10 / 11 (64-bit)</li>
+        <li>macOS 12 Monterey or later</li>
+        <li>Ubuntu 20.04 LTS or later</li>
+      </ul>
+    </div>
+    <div class="req-card">
+      <h3>Hardware</h3>
+      <ul>
+        <li>RAM: 4 GB minimum (8 GB recommended)</li>
+        <li>Disk: 500 MB free space</li>
+        <li>CPU: Any modern x86-64 processor</li>
+      </ul>
+    </div>
+    <div class="req-card">
+      <h3>Python <span class="badge badge-required">Required</span></h3>
+      <ul>
+        <li>Python <strong>3.8 or later</strong> (3.11 recommended)</li>
+        <li>pip (bundled with Python 3.8+)</li>
+        <li>Virtual environment tool: <code>venv</code> or <code>conda</code></li>
+      </ul>
+    </div>
+    <div class="req-card">
+      <h3>Browser <span class="badge badge-optional">Optional</span></h3>
+      <ul>
+        <li>Any modern browser for the Flask web UI</li>
+        <li>Google Chrome, Firefox, Edge, Safari</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ────────────────────────────────────────────────────────────────── -->
+  <h2>2. Python Library Dependencies</h2>
+  <p>All required packages are listed in <code>requirements.txt</code> and can be installed with a single pip command.</p>
+  <table>
+    <thead>
+      <tr><th>Library</th><th>Version</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Flask</td><td>&ge; 3.0</td><td>Web application framework for serving the prediction UI and REST API</td></tr>
+      <tr><td>pandas</td><td>&ge; 2.2</td><td>Data loading, manipulation, and DataFrame construction from form inputs</td></tr>
+      <tr><td>numpy</td><td>&ge; 2.0</td><td>Numerical operations used internally by scikit-learn</td></tr>
+      <tr><td>scikit-learn</td><td>&ge; 1.5</td><td>ML algorithms, pre-processing pipelines, model serialisation</td></tr>
+      <tr><td>Werkzeug</td><td>&ge; 3.0</td><td>WSGI utility library (Flask dependency)</td></tr>
+      <tr><td>gunicorn</td><td>&ge; 21.2</td><td>Production WSGI HTTP server (Linux/macOS deployment)</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ────────────────────────────────────────────────────────────────── -->
+  <h2>3. Installation Steps</h2>
+
+  <h3>Step 1 – Verify Python Installation</h3>
+  <pre>python --version
+# Expected output: Python 3.x.x  (3.8 or later)</pre>
+
+  <h3>Step 2 – Create a Virtual Environment (Recommended)</h3>
+  <pre># Windows
+python -m venv venv
+venv\Scripts\activate
+
+# macOS / Linux
+python3 -m venv venv
+source venv/bin/activate</pre>
+
+  <h3>Step 3 – Install Dependencies</h3>
+  <pre>cd credit_card_approval
+pip install -r requirements.txt</pre>
+
+  <h3>Step 4 – Verify Dataset</h3>
+  <p>Ensure the UCI Credit Card Approval dataset is present at <code>data/crx.data</code>.</p>
+  <pre># Check the file exists
+ls data/crx.data        # macOS/Linux
+dir data\crx.data       # Windows</pre>
+  <p>If missing, download from the <a href="https://archive.ics.uci.edu/ml/datasets/credit+approval">UCI ML Repository</a> and place the file in the <code>data/</code> folder.</p>
+
+  <h3>Step 5 – Train the Model</h3>
+  <pre>python train_model.py</pre>
+  <p>This generates <code>models/best_model.pkl</code> and <code>models/model_meta.pkl</code> required by the Flask app.</p>
+
+  <h3>Step 6 – Run the Application</h3>
+  <pre>python app.py</pre>
+  <p>Open your browser and navigate to <code>http://localhost:5000</code>.</p>
+
+  <!-- ────────────────────────────────────────────────────────────────── -->
+  <h2>4. Dataset Specification</h2>
+  <table>
+    <thead>
+      <tr><th>Property</th><th>Value</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Source</td><td>UCI Machine Learning Repository – Credit Approval</td></tr>
+      <tr><td>File</td><td>crx.data</td></tr>
+      <tr><td>Format</td><td>CSV (no header row)</td></tr>
+      <tr><td>Rows</td><td>690 applicant records</td></tr>
+      <tr><td>Columns</td><td>16 (15 features + 1 target)</td></tr>
+      <tr><td>Missing Values</td><td>Represented as <code>?</code> — handled by the imputation pipeline</td></tr>
+      <tr><td>Target Column (A16)</td><td><code>+</code> = Approved, <code>-</code> = Rejected</td></tr>
+      <tr><td>License</td><td>Creative Commons Attribution 4.0 International</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ────────────────────────────────────────────────────────────────── -->
+  <h2>5. Environment Variables (Optional)</h2>
+  <p>The Flask application reads the following optional environment variables at startup:</p>
+  <table>
+    <thead>
+      <tr><th>Variable</th><th>Default</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>PORT</code></td><td>5000</td><td>TCP port on which the Flask server listens</td></tr>
+      <tr><td><code>FLASK_ENV</code></td><td>production</td><td>Set to <code>development</code> to enable debug mode and auto-reload</td></tr>
+    </tbody>
+  </table>
+  <pre># Example (Windows PowerShell)
+$env:PORT = "8080"
+python app.py
+
+# Example (macOS / Linux)
+PORT=8080 python app.py</pre>
+
+  <!-- ────────────────────────────────────────────────────────────────── -->
+  <h2>6. No Cloud Account Required</h2>
+  <div class="note">
+    <strong>Note:</strong> This project runs entirely on your local machine.
+    No IBM Cloud, AWS, Azure, or any other cloud account is required.
+    All ML inference is performed by the locally saved scikit-learn model.
+  </div>
+
+  <!-- ────────────────────────────────────────────────────────────────── -->
+  <h2>7. Troubleshooting</h2>
+  <table>
+    <thead><tr><th>Issue</th><th>Solution</th></tr></thead>
+    <tbody>
+      <tr><td><code>ModuleNotFoundError: No module named 'flask'</code></td><td>Run <code>pip install -r requirements.txt</code> inside your activated virtual environment.</td></tr>
+      <tr><td><code>FileNotFoundError: models/best_model.pkl</code></td><td>Run <code>python train_model.py</code> first to generate the model files.</td></tr>
+      <tr><td><code>FileNotFoundError: data/crx.data</code></td><td>Download the dataset from UCI and place it in the <code>data/</code> folder.</td></tr>
+      <tr><td>Port 5000 already in use</td><td>Set <code>PORT=8080</code> environment variable or kill the process occupying port 5000.</td></tr>
+      <tr><td>Python 3.7 or earlier</td><td>Upgrade to Python 3.8+ — some type hints and library versions require it.</td></tr>
+    </tbody>
+  </table>
+
+  <footer>
+    <hr style="border:none;border-top:1px solid #e5e7eb;margin-bottom:12px;"/>
+    Credit Card Approval System &nbsp;|&nbsp; Prerequisites &nbsp;|&nbsp; Made with IBM Bob
+  </footer>
+</body>
+</html>

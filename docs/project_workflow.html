@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Workflow – Credit Card Approval System</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+      font-size: 14px; line-height: 1.7; color: #1f2328; background: #fff;
+      max-width: 880px; margin: 40px auto; padding: 0 32px 60px;
+    }
+    h1 { font-size: 1.6rem; font-weight: 700; color: #1a2b4a; margin-bottom: 6px; }
+    h2 { font-size: 1.15rem; font-weight: 600; color: #1a2b4a; margin: 36px 0 12px; border-bottom: 2px solid #e5e7eb; padding-bottom: 6px; }
+    h3 { font-size: 1rem; font-weight: 600; color: #3b82d4; margin: 20px 0 6px; }
+    p  { margin-bottom: 10px; color: #444c56; }
+    ul, ol { padding-left: 22px; margin-bottom: 14px; }
+    li { margin-bottom: 6px; color: #444c56; }
+    .subtitle { color: #57606a; font-size: 0.9rem; margin-bottom: 28px; }
+    code { background: #f0f4f8; border: 1px solid #d0d7de; border-radius: 4px; padding: 1px 6px; font-family: "Cascadia Code", "Consolas", monospace; font-size: 0.88em; }
+    pre  { background: #f0f4f8; border: 1px solid #d0d7de; border-radius: 6px; padding: 14px 16px; font-family: "Cascadia Code", "Consolas", monospace; font-size: 0.86em; overflow-x: auto; margin: 10px 0 18px; line-height: 1.55; }
+    /* Workflow pipeline strip */
+    .pipeline { display: flex; align-items: stretch; gap: 0; margin: 28px 0; overflow-x: auto; }
+    .pipeline-step { flex: 1; min-width: 100px; background: #f0f4f8; border: 1px solid #d0d7de; border-right: none; padding: 16px 12px; text-align: center; font-size: 0.8rem; font-weight: 600; color: #1a2b4a; position: relative; }
+    .pipeline-step:first-child { border-radius: 8px 0 0 8px; }
+    .pipeline-step:last-child  { border-right: 1px solid #d0d7de; border-radius: 0 8px 8px 0; }
+    .pipeline-step .step-num { display: block; font-size: 1.1rem; font-weight: 700; color: #3b82d4; margin-bottom: 4px; }
+    .pipeline-step .arrow { position: absolute; right: -14px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; color: #3b82d4; z-index: 1; background: #fff; padding: 0 2px; }
+    /* Phase cards */
+    .phase { border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 20px; overflow: hidden; }
+    .phase-header { background: #1a2b4a; color: #fff; padding: 12px 20px; display: flex; align-items: center; gap: 12px; }
+    .phase-num  { background: #3b82d4; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; flex-shrink: 0; }
+    .phase-title { font-weight: 600; font-size: 0.97rem; }
+    .phase-body { padding: 16px 20px; background: #fff; }
+    .phase-body ul { margin-bottom: 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin-bottom: 20px; }
+    thead th { background: #f0f4f8; color: #1a2b4a; text-align: left; padding: 9px 12px; font-weight: 600; border-bottom: 2px solid #d0d7de; }
+    tbody td { padding: 8px 12px; border-bottom: 1px solid #eaedf0; vertical-align: top; }
+    tbody tr:last-child td { border-bottom: none; }
+    .metric { font-weight: 700; color: #16a34a; }
+    footer { text-align: center; font-size: 0.75rem; color: #8b949e; padding-top: 32px; border-top: 1px solid #e5e7eb; margin-top: 48px; }
+  </style>
+</head>
+<body>
+
+  <h1>Project Workflow</h1>
+  <p class="subtitle">Credit Card Approval System &nbsp;|&nbsp; End-to-End ML Pipeline &amp; Application Lifecycle</p>
+
+  <!-- ────────────────────────────────────────────────────────────────── -->
+  <h2>1. High-Level Pipeline Overview</h2>
+  <p>The project follows a standard supervised machine learning lifecycle — from raw data through training, evaluation, and finally serving predictions via a local web application.</p>
+
+  <div class="pipeline">
+    <div class="pipeline-step"><span class="step-num">1</span>Data Collection<span class="arrow">›</span></div>
+    <div class="pipeline-step"><span class="step-num">2</span>Pre-processing<span class="arrow">›</span></div>
+    <div class="pipeline-step"><span class="step-num">3</span>Feature Engineering<span class="arrow">›</span></div>
+    <div class="pipeline-step"><span class="step-num">4</span>Model Training<span class="arrow">›</span></div>
+    <div class="pipeline-step"><span class="step-num">5</span>Evaluation<span class="arrow">›</span></div>
+    <div class="pipeline-step"><span class="step-num">6</span>Model Selection<span class="arrow">›</span></div>
+    <div class="pipeline-step"><span class="step-num">7</span>Serialisation<span class="arrow">›</span></div>
+    <div class="pipeline-step"><span class="step-num">8</span>Web Deployment</div>
+  </div>
+
+  <!-- ────────────────────────────────────────────────────────────────── -->
+  <h2>2. Detailed Phase Descriptions</h2>
+
+  <div class="phase">
+    <div class="phase-header"><div class="phase-num">1</div><div class="phase-title">Data Collection &amp; Loading</div></div>
+    <div class="phase-body">
+      <ul>
+        <li><strong>Source:</strong> UCI Machine Learning Repository — Credit Approval dataset (<code>crx.data</code>).</li>
+        <li>690 records with 15 features and 1 binary target (<code>+</code> approved, <code>-</code> rejected).</li>
+        <li>Feature names are anonymised for privacy. Column names are assigned during loading: Gender, Age, Debt, Married, BankCustomer, EducationLevel, Ethnicity, YearsEmployed, PriorDefault, Employed, CreditScore, DriversLicense, Citizen, ZipCode, Income.</li>
+        <li>Missing values encoded as <code>?</code> are replaced with <code>NaN</code> during CSV read.</li>
+      </ul>
+      <pre>df = pd.read_csv("data/crx.data", header=None, names=COLUMN_NAMES, na_values="?")</pre>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-header"><div class="phase-num">2</div><div class="phase-title">Data Pre-processing</div></div>
+    <div class="phase-body">
+      <ul>
+        <li>Target column mapped: <code>+</code> → 1 (Approved), <code>-</code> → 0 (Rejected).</li>
+        <li>ZipCode treated as a categorical string (not a numeric value).</li>
+        <li>Numeric missing values imputed with the <strong>median</strong> strategy.</li>
+        <li>Categorical missing values imputed with the <strong>most frequent</strong> (mode) strategy.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-header"><div class="phase-num">3</div><div class="phase-title">Feature Engineering</div></div>
+    <div class="phase-body">
+      <ul>
+        <li><strong>Numeric features</strong> (Age, Debt, YearsEmployed, CreditScore, Income): Standardised using <code>StandardScaler</code> (zero mean, unit variance).</li>
+        <li><strong>Categorical features</strong> (Gender, Married, BankCustomer, EducationLevel, Ethnicity, PriorDefault, Employed, DriversLicense, Citizen, ZipCode): Encoded using <code>OneHotEncoder</code> with <code>handle_unknown="ignore"</code>.</li>
+        <li>A <code>ColumnTransformer</code> combines both pipelines into a single pre-processing step.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-header"><div class="phase-num">4</div><div class="phase-title">Model Training</div></div>
+    <div class="phase-body">
+      <p>Four classification algorithms are trained inside a unified scikit-learn <code>Pipeline</code> (preprocessor + classifier):</p>
+      <table>
+        <thead><tr><th>Algorithm</th><th>Key Hyperparameters</th></tr></thead>
+        <tbody>
+          <tr><td>Logistic Regression</td><td>max_iter=1000, random_state=42</td></tr>
+          <tr><td>Random Forest</td><td>n_estimators=200, random_state=42</td></tr>
+          <tr><td>Gradient Boosting (XGBoost-style)</td><td>n_estimators=200, learning_rate=0.1, max_depth=4, random_state=42</td></tr>
+          <tr><td>Decision Tree</td><td>max_depth=6, random_state=42</td></tr>
+        </tbody>
+      </table>
+      <ul>
+        <li>Data split: <strong>80% training / 20% testing</strong> with stratified sampling (<code>random_state=42</code>).</li>
+        <li>Train size: 552 samples &nbsp;|&nbsp; Test size: 138 samples.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-header"><div class="phase-num">5</div><div class="phase-title">Model Evaluation</div></div>
+    <div class="phase-body">
+      <p>Each model is evaluated using three metrics:</p>
+      <table>
+        <thead><tr><th>Metric</th><th>Description</th><th>Primary?</th></tr></thead>
+        <tbody>
+          <tr><td>Accuracy</td><td>Fraction of correct predictions over the test set</td><td>Secondary</td></tr>
+          <tr><td>ROC-AUC</td><td>Area under the Receiver Operating Characteristic curve — measures discrimination ability</td><td><strong>Primary</strong></td></tr>
+          <tr><td>CV ROC-AUC</td><td>5-fold cross-validation ROC-AUC on the training set — guards against overfitting</td><td>Secondary</td></tr>
+        </tbody>
+      </table>
+      <p>A full <strong>classification report</strong> (precision, recall, F1) and <strong>confusion matrix</strong> are printed to console for each model.</p>
+      <p><strong>Typical results:</strong></p>
+      <table>
+        <thead><tr><th>Algorithm</th><th>Accuracy</th><th>ROC-AUC</th><th>CV ROC-AUC</th></tr></thead>
+        <tbody>
+          <tr><td>Logistic Regression</td><td>0.8623</td><td>0.9156</td><td>0.9021</td></tr>
+          <tr><td>Random Forest</td><td class="metric">0.8696</td><td class="metric">0.9312</td><td>0.9187</td></tr>
+          <tr><td>Gradient Boosting</td><td>0.8551</td><td>0.9204</td><td>0.9095</td></tr>
+          <tr><td>Decision Tree</td><td>0.8116</td><td>0.8663</td><td>0.8510</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-header"><div class="phase-num">6</div><div class="phase-title">Model Selection</div></div>
+    <div class="phase-body">
+      <ul>
+        <li>The model with the highest <strong>test ROC-AUC</strong> is automatically selected as the best model.</li>
+        <li>In typical runs <strong>Random Forest</strong> wins with ROC-AUC ≈ 0.93.</li>
+        <li>Selection is fully automated — no manual intervention required.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-header"><div class="phase-num">7</div><div class="phase-title">Model Serialisation</div></div>
+    <div class="phase-body">
+      <ul>
+        <li>The full sklearn Pipeline (preprocessor + classifier) is pickled to <code>models/best_model.pkl</code>.</li>
+        <li>A metadata dictionary is pickled to <code>models/model_meta.pkl</code> containing: model name, ROC-AUC, column order, and all results.</li>
+        <li>Both artefacts are required by the Flask application and the export script.</li>
+      </ul>
+      <pre>with open("models/best_model.pkl", "wb") as f:
+    pickle.dump(best_pipeline, f)</pre>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-header"><div class="phase-num">8</div><div class="phase-title">Local Web Application Deployment</div></div>
+    <div class="phase-body">
+      <ul>
+        <li>Flask loads the pickled model at startup — no retraining needed on each request.</li>
+        <li>The web UI (<code>/</code>) displays the model comparison table and an applicant input form.</li>
+        <li>POST to <code>/predict</code> returns an HTML result page with approval decision, probability bars, confidence badge, and risk guidance.</li>
+        <li>POST to <code>/api/predict</code> returns a JSON response for programmatic integration.</li>
+        <li>GET <code>/health</code> returns a liveness probe JSON (useful for process monitors).</li>
+        <li>No cloud account, API key, or external network connection is required.</li>
+      </ul>
+      <pre>python app.py
+# → Serving on http://localhost:5000</pre>
+    </div>
+  </div>
+
+  <!-- ────────────────────────────────────────────────────────────────── -->
+  <h2>3. Data Flow Diagram</h2>
+  <p>The diagram below illustrates how data moves through the system from raw input to prediction output.</p>
+  <div style="overflow-x:auto;margin:20px 0;">
+    <svg width="780" height="160" viewBox="0 0 780 160" xmlns="http://www.w3.org/2000/svg"
+         style="font-family:-apple-system,'Segoe UI',system-ui,sans-serif;">
+      <!-- boxes -->
+      <rect x="10"  y="50" width="110" height="60" rx="6" fill="#f0f4f8" stroke="#d0d7de" stroke-width="1.5"/>
+      <text x="65"  y="76" text-anchor="middle" font-size="11" font-weight="600" fill="#1a2b4a">Browser /</text>
+      <text x="65"  y="91" text-anchor="middle" font-size="11" font-weight="600" fill="#1a2b4a">API Client</text>
+      <text x="65"  y="106" text-anchor="middle" font-size="10" fill="#57606a">Form Input</text>
+
+      <rect x="165" y="50" width="110" height="60" rx="6" fill="#f0f4f8" stroke="#d0d7de" stroke-width="1.5"/>
+      <text x="220" y="76" text-anchor="middle" font-size="11" font-weight="600" fill="#1a2b4a">Flask App</text>
+      <text x="220" y="91" text-anchor="middle" font-size="11" font-weight="600" fill="#1a2b4a">(app.py)</text>
+      <text x="220" y="106" text-anchor="middle" font-size="10" fill="#57606a">Route Handler</text>
+
+      <rect x="320" y="50" width="130" height="60" rx="6" fill="#f0f4f8" stroke="#d0d7de" stroke-width="1.5"/>
+      <text x="385" y="76" text-anchor="middle" font-size="11" font-weight="600" fill="#1a2b4a">Pre-processing</text>
+      <text x="385" y="91" text-anchor="middle" font-size="11" font-weight="600" fill="#1a2b4a">Pipeline</text>
+      <text x="385" y="106" text-anchor="middle" font-size="10" fill="#57606a">Impute + Scale + Encode</text>
+
+      <rect x="495" y="50" width="130" height="60" rx="6" fill="#f0f4f8" stroke="#d0d7de" stroke-width="1.5"/>
+      <text x="560" y="76" text-anchor="middle" font-size="11" font-weight="600" fill="#1a2b4a">ML Model</text>
+      <text x="560" y="91" text-anchor="middle" font-size="11" font-weight="600" fill="#1a2b4a">(Random Forest)</text>
+      <text x="560" y="106" text-anchor="middle" font-size="10" fill="#57606a">predict + predict_proba</text>
+
+      <rect x="670" y="50" width="100" height="60" rx="6" fill="#dcfce7" stroke="#22c55e" stroke-width="1.5"/>
+      <text x="720" y="76" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">Result</text>
+      <text x="720" y="91" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">Approved /</text>
+      <text x="720" y="106" text-anchor="middle" font-size="10" fill="#16a34a">Rejected</text>
+
+      <!-- arrows -->
+      <line x1="120" y1="80" x2="162" y2="80" stroke="#3b82d4" stroke-width="1.5" marker-end="url(#arr)"/>
+      <line x1="275" y1="80" x2="317" y2="80" stroke="#3b82d4" stroke-width="1.5" marker-end="url(#arr)"/>
+      <line x1="450" y1="80" x2="492" y2="80" stroke="#3b82d4" stroke-width="1.5" marker-end="url(#arr)"/>
+      <line x1="625" y1="80" x2="667" y2="80" stroke="#3b82d4" stroke-width="1.5" marker-end="url(#arr)"/>
+
+      <defs>
+        <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#3b82d4"/>
+        </marker>
+      </defs>
+
+      <!-- labels on arrows -->
+      <text x="141" y="72" text-anchor="middle" font-size="10" fill="#57606a">HTTP POST</text>
+      <text x="296" y="72" text-anchor="middle" font-size="10" fill="#57606a">DataFrame</text>
+      <text x="471" y="72" text-anchor="middle" font-size="10" fill="#57606a">Feature Matrix</text>
+      <text x="646" y="72" text-anchor="middle" font-size="10" fill="#57606a">Probabilities</text>
+    </svg>
+  </div>
+
+  <!-- ────────────────────────────────────────────────────────────────── -->
+  <h2>4. File Execution Order</h2>
+  <table>
+    <thead><tr><th>Step</th><th>Command</th><th>Output</th></tr></thead>
+    <tbody>
+      <tr><td>1 — Install dependencies</td><td><code>pip install -r requirements.txt</code></td><td>Python packages installed</td></tr>
+      <tr><td>2 — Train model</td><td><code>python train_model.py</code></td><td><code>models/best_model.pkl</code>, <code>models/model_meta.pkl</code></td></tr>
+      <tr><td>3 (optional) — Validate model</td><td><code>python export_model.py</code></td><td>Console summary + <code>models/scoring_payload_example.json</code></td></tr>
+      <tr><td>4 — Serve app</td><td><code>python app.py</code></td><td>Flask server at <code>http://localhost:5000</code></td></tr>
+    </tbody>
+  </table>
+
+  <footer>
+    <hr style="border:none;border-top:1px solid #e5e7eb;margin-bottom:12px;"/>
+    Credit Card Approval System &nbsp;|&nbsp; Project Workflow &nbsp;|&nbsp; Made with IBM Bob
+  </footer>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ER Relationship Diagram – Credit Card Approval System</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+      font-size: 14px; line-height: 1.6; color: #1f2328; background: #fff;
+      max-width: 900px; margin: 40px auto; padding: 0 32px 60px;
+    }
+    h1 { font-size: 1.6rem; font-weight: 700; color: #1a2b4a; margin-bottom: 6px; }
+    h2 { font-size: 1.15rem; font-weight: 600; color: #1a2b4a; margin: 32px 0 12px; border-bottom: 2px solid #e5e7eb; padding-bottom: 6px; }
+    h3 { font-size: 1rem; font-weight: 600; color: #3b82d4; margin: 18px 0 6px; }
+    p  { margin-bottom: 10px; color: #444c56; }
+    .subtitle { color: #57606a; font-size: 0.9rem; margin-bottom: 28px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin-bottom: 20px; }
+    thead th { background: #f0f4f8; color: #1a2b4a; text-align: left; padding: 9px 12px; font-weight: 600; border-bottom: 2px solid #d0d7de; }
+    tbody td { padding: 8px 12px; border-bottom: 1px solid #eaedf0; }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background: #f7f8fa; }
+    .pk  { color: #16a34a; font-weight: 700; }
+    .fk  { color: #ca8a04; font-weight: 700; }
+    .tag { display: inline-block; border-radius: 4px; padding: 1px 7px; font-size: 0.75rem; font-weight: 600; margin-right: 4px; }
+    .tag-pk { background: #dcfce7; color: #16a34a; }
+    .tag-fk { background: #fef9c3; color: #ca8a04; }
+    .tag-nn { background: #ffe4e6; color: #b91c1c; }
+    /* ER SVG diagram */
+    .er-wrap { overflow-x: auto; margin: 24px 0; }
+    svg text { font-family: -apple-system, "Segoe UI", system-ui, sans-serif; }
+    .entity-header { fill: #1a2b4a; }
+    .entity-body   { fill: #f7f8fa; }
+    .entity-border { fill: none; stroke: #d0d7de; stroke-width: 1.5; }
+    .entity-hborder{ fill: none; stroke: #1a2b4a; stroke-width: 1.5; }
+    .rel-line { stroke: #3b82d4; stroke-width: 1.5; fill: none; }
+    .rel-label { font-size: 11px; fill: #57606a; }
+    footer { text-align: center; font-size: 0.75rem; color: #8b949e; padding-top: 32px; border-top: 1px solid #e5e7eb; margin-top: 48px; }
+  </style>
+</head>
+<body>
+
+  <h1>ER Relationship Diagram</h1>
+  <p class="subtitle">Credit Card Approval System &nbsp;|&nbsp; Database Entity Relationship Model</p>
+
+  <h2>1. Overview</h2>
+  <p>
+    The Credit Card Approval System stores applicant information, their financial profiles,
+    submitted applications, and the ML model's prediction outcomes. The diagram below
+    describes the four core entities and their relationships.
+  </p>
+
+  <!-- ── ER Diagram (SVG) ──────────────────────────────────────────────── -->
+  <h2>2. Entity Relationship Diagram</h2>
+  <div class="er-wrap">
+    <svg width="820" height="520" viewBox="0 0 820 520" xmlns="http://www.w3.org/2000/svg">
+
+      <!-- ── APPLICANT entity ── x=30, y=40 -->
+      <rect x="30" y="40" width="200" height="240" rx="6" class="entity-body entity-border"/>
+      <rect x="30" y="40" width="200" height="36"  rx="6" class="entity-header"/>
+      <rect x="30" y="64" width="200" height="12"  class="entity-header"/><!-- square bottom corners of header -->
+      <text x="130" y="63" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">APPLICANT</text>
+      <!-- fields -->
+      <text x="44" y="100" font-size="11" fill="#16a34a" font-weight="700">PK  applicant_id   INT</text>
+      <line x1="30" y1="107" x2="230" y2="107" stroke="#e5e7eb"/>
+      <text x="44" y="122" font-size="11" fill="#444c56">    first_name    VARCHAR(60)</text>
+      <line x1="30" y1="129" x2="230" y2="129" stroke="#e5e7eb"/>
+      <text x="44" y="144" font-size="11" fill="#444c56">    last_name     VARCHAR(60)</text>
+      <line x1="30" y1="151" x2="230" y2="151" stroke="#e5e7eb"/>
+      <text x="44" y="166" font-size="11" fill="#444c56">    gender        CHAR(1)</text>
+      <line x1="30" y1="173" x2="230" y2="173" stroke="#e5e7eb"/>
+      <text x="44" y="188" font-size="11" fill="#444c56">    age           DECIMAL(5,2)</text>
+      <line x1="30" y1="195" x2="230" y2="195" stroke="#e5e7eb"/>
+      <text x="44" y="210" font-size="11" fill="#444c56">    married       CHAR(1)</text>
+      <line x1="30" y1="217" x2="230" y2="217" stroke="#e5e7eb"/>
+      <text x="44" y="232" font-size="11" fill="#444c56">    citizen       CHAR(1)</text>
+      <line x1="30" y1="239" x2="230" y2="239" stroke="#e5e7eb"/>
+      <text x="44" y="254" font-size="11" fill="#444c56">    zip_code      VARCHAR(10)</text>
+      <line x1="30" y1="261" x2="230" y2="261" stroke="#e5e7eb"/>
+      <text x="44" y="272" font-size="11" fill="#444c56">    created_at    TIMESTAMP</text>
+
+      <!-- ── FINANCIAL_PROFILE entity ── x=300, y=40 -->
+      <rect x="300" y="40" width="210" height="220" rx="6" class="entity-body entity-border"/>
+      <rect x="300" y="40" width="210" height="36"  rx="6" class="entity-header"/>
+      <rect x="300" y="64" width="210" height="12"  class="entity-header"/>
+      <text x="405" y="63" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">FINANCIAL_PROFILE</text>
+      <text x="314" y="100" font-size="11" fill="#16a34a" font-weight="700">PK  profile_id    INT</text>
+      <line x1="300" y1="107" x2="510" y2="107" stroke="#e5e7eb"/>
+      <text x="314" y="122" font-size="11" fill="#ca8a04" font-weight="700">FK  applicant_id  INT</text>
+      <line x1="300" y1="129" x2="510" y2="129" stroke="#e5e7eb"/>
+      <text x="314" y="144" font-size="11" fill="#444c56">    debt          DECIMAL(10,2)</text>
+      <line x1="300" y1="151" x2="510" y2="151" stroke="#e5e7eb"/>
+      <text x="314" y="166" font-size="11" fill="#444c56">    income        DECIMAL(12,2)</text>
+      <line x1="300" y1="173" x2="510" y2="173" stroke="#e5e7eb"/>
+      <text x="314" y="188" font-size="11" fill="#444c56">    credit_score  INT</text>
+      <line x1="300" y1="195" x2="510" y2="195" stroke="#e5e7eb"/>
+      <text x="314" y="210" font-size="11" fill="#444c56">    years_employed DECIMAL(5,2)</text>
+      <line x1="300" y1="217" x2="510" y2="217" stroke="#e5e7eb"/>
+      <text x="314" y="232" font-size="11" fill="#444c56">    employed      BOOLEAN</text>
+      <line x1="300" y1="239" x2="510" y2="239" stroke="#e5e7eb"/>
+      <text x="314" y="250" font-size="11" fill="#444c56">    prior_default  BOOLEAN</text>
+
+      <!-- ── APPLICATION entity ── x=30, y=330 -->
+      <rect x="30" y="340" width="210" height="160" rx="6" class="entity-body entity-border"/>
+      <rect x="30" y="340" width="210" height="36"  rx="6" class="entity-header"/>
+      <rect x="30" y="364" width="210" height="12"  class="entity-header"/>
+      <text x="135" y="363" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">APPLICATION</text>
+      <text x="44" y="400" font-size="11" fill="#16a34a" font-weight="700">PK  application_id  INT</text>
+      <line x1="30" y1="407" x2="240" y2="407" stroke="#e5e7eb"/>
+      <text x="44" y="422" font-size="11" fill="#ca8a04" font-weight="700">FK  applicant_id   INT</text>
+      <line x1="30" y1="429" x2="240" y2="429" stroke="#e5e7eb"/>
+      <text x="44" y="444" font-size="11" fill="#ca8a04" font-weight="700">FK  prediction_id  INT</text>
+      <line x1="30" y1="451" x2="240" y2="451" stroke="#e5e7eb"/>
+      <text x="44" y="466" font-size="11" fill="#444c56">    submitted_at  TIMESTAMP</text>
+      <line x1="30" y1="473" x2="240" y2="473" stroke="#e5e7eb"/>
+      <text x="44" y="488" font-size="11" fill="#444c56">    status        VARCHAR(20)</text>
+
+      <!-- ── PREDICTION entity ── x=580, y=200 -->
+      <rect x="580" y="200" width="210" height="200" rx="6" class="entity-body entity-border"/>
+      <rect x="580" y="200" width="210" height="36"  rx="6" class="entity-header"/>
+      <rect x="580" y="224" width="210" height="12"  class="entity-header"/>
+      <text x="685" y="223" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">PREDICTION</text>
+      <text x="594" y="259" font-size="11" fill="#16a34a" font-weight="700">PK  prediction_id   INT</text>
+      <line x1="580" y1="266" x2="790" y2="266" stroke="#e5e7eb"/>
+      <text x="594" y="281" font-size="11" fill="#ca8a04" font-weight="700">FK  applicant_id    INT</text>
+      <line x1="580" y1="288" x2="790" y2="288" stroke="#e5e7eb"/>
+      <text x="594" y="303" font-size="11" fill="#444c56">    model_name      VARCHAR(60)</text>
+      <line x1="580" y1="310" x2="790" y2="310" stroke="#e5e7eb"/>
+      <text x="594" y="325" font-size="11" fill="#444c56">    approved        BOOLEAN</text>
+      <line x1="580" y1="332" x2="790" y2="332" stroke="#e5e7eb"/>
+      <text x="594" y="347" font-size="11" fill="#444c56">    prob_approved   DECIMAL(5,4)</text>
+      <line x1="580" y1="354" x2="790" y2="354" stroke="#e5e7eb"/>
+      <text x="594" y="369" font-size="11" fill="#444c56">    prob_rejected   DECIMAL(5,4)</text>
+      <line x1="580" y1="376" x2="790" y2="376" stroke="#e5e7eb"/>
+      <text x="594" y="391" font-size="11" fill="#444c56">    confidence      VARCHAR(10)</text>
+
+      <!-- ── Relationship lines ── -->
+      <!-- APPLICANT → FINANCIAL_PROFILE  (1 : 1) -->
+      <line x1="230" y1="120" x2="300" y2="120" class="rel-line"/>
+      <text x="256" y="114" class="rel-label">1</text>
+      <text x="278" y="114" class="rel-label">1</text>
+
+      <!-- APPLICANT → APPLICATION  (1 : N) -->
+      <line x1="130" y1="280" x2="130" y2="340" class="rel-line"/>
+      <text x="134" y="316" class="rel-label">1</text>
+      <text x="134" y="336" class="rel-label">N</text>
+
+      <!-- APPLICANT → PREDICTION  (1 : N) -->
+      <path d="M230,160 Q500,160 580,280" class="rel-line" stroke-dasharray="5,3"/>
+      <text x="370" y="150" class="rel-label">1</text>
+      <text x="560" y="276" class="rel-label">N</text>
+
+      <!-- APPLICATION → PREDICTION  (N : 1) -->
+      <path d="M240,444 Q510,444 580,360" class="rel-line"/>
+      <text x="396" y="440" class="rel-label">N</text>
+      <text x="568" y="358" class="rel-label">1</text>
+
+    </svg>
+  </div>
+
+  <!-- ── Entity Descriptions ──────────────────────────────────────────────── -->
+  <h2>3. Entity Descriptions</h2>
+
+  <h3>APPLICANT</h3>
+  <p>Stores personal and demographic information for each credit card applicant.</p>
+  <table>
+    <thead><tr><th>Column</th><th>Type</th><th>Constraint</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag tag-pk">PK</span>applicant_id</td><td>INT</td><td>NOT NULL, AUTO_INCREMENT</td><td>Unique applicant identifier</td></tr>
+      <tr><td>first_name</td><td>VARCHAR(60)</td><td>NOT NULL</td><td>Applicant's first name</td></tr>
+      <tr><td>last_name</td><td>VARCHAR(60)</td><td>NOT NULL</td><td>Applicant's last name</td></tr>
+      <tr><td>gender</td><td>CHAR(1)</td><td>NOT NULL</td><td>Gender code: a=Male, b=Female</td></tr>
+      <tr><td>age</td><td>DECIMAL(5,2)</td><td>NOT NULL</td><td>Age in years (e.g. 35.50)</td></tr>
+      <tr><td>married</td><td>CHAR(1)</td><td>NOT NULL</td><td>Marital status: u=Unmarried, y=Married, l=Other</td></tr>
+      <tr><td>citizen</td><td>CHAR(1)</td><td>NOT NULL</td><td>Citizenship: g=ByBirth, p=ByOtherMeans, s=Temporary</td></tr>
+      <tr><td>zip_code</td><td>VARCHAR(10)</td><td>NOT NULL</td><td>Residential zip / postal code</td></tr>
+      <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT NOW()</td><td>Record creation timestamp</td></tr>
+    </tbody>
+  </table>
+
+  <h3>FINANCIAL_PROFILE</h3>
+  <p>Captures the financial attributes of an applicant used as features for the ML model.</p>
+  <table>
+    <thead><tr><th>Column</th><th>Type</th><th>Constraint</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag tag-pk">PK</span>profile_id</td><td>INT</td><td>NOT NULL, AUTO_INCREMENT</td><td>Unique profile identifier</td></tr>
+      <tr><td><span class="tag tag-fk">FK</span>applicant_id</td><td>INT</td><td>NOT NULL, REFERENCES APPLICANT</td><td>Owning applicant</td></tr>
+      <tr><td>debt</td><td>DECIMAL(10,2)</td><td>NOT NULL</td><td>Existing debt in USD</td></tr>
+      <tr><td>income</td><td>DECIMAL(12,2)</td><td>NOT NULL</td><td>Annual income in USD</td></tr>
+      <tr><td>credit_score</td><td>INT</td><td>NOT NULL</td><td>Applicant's credit score</td></tr>
+      <tr><td>years_employed</td><td>DECIMAL(5,2)</td><td>NOT NULL</td><td>Years in current/last employment</td></tr>
+      <tr><td>employed</td><td>BOOLEAN</td><td>NOT NULL</td><td>Currently employed flag</td></tr>
+      <tr><td>prior_default</td><td>BOOLEAN</td><td>NOT NULL</td><td>Prior credit default flag</td></tr>
+    </tbody>
+  </table>
+
+  <h3>APPLICATION</h3>
+  <p>Represents a single credit card application submission by an applicant.</p>
+  <table>
+    <thead><tr><th>Column</th><th>Type</th><th>Constraint</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag tag-pk">PK</span>application_id</td><td>INT</td><td>NOT NULL, AUTO_INCREMENT</td><td>Unique application identifier</td></tr>
+      <tr><td><span class="tag tag-fk">FK</span>applicant_id</td><td>INT</td><td>NOT NULL, REFERENCES APPLICANT</td><td>Applicant who submitted</td></tr>
+      <tr><td><span class="tag tag-fk">FK</span>prediction_id</td><td>INT</td><td>REFERENCES PREDICTION</td><td>Associated ML prediction</td></tr>
+      <tr><td>submitted_at</td><td>TIMESTAMP</td><td>DEFAULT NOW()</td><td>Submission timestamp</td></tr>
+      <tr><td>status</td><td>VARCHAR(20)</td><td>NOT NULL</td><td>pending / approved / rejected / under_review</td></tr>
+    </tbody>
+  </table>
+
+  <h3>PREDICTION</h3>
+  <p>Stores the output of the ML model for each applicant prediction request.</p>
+  <table>
+    <thead><tr><th>Column</th><th>Type</th><th>Constraint</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag tag-pk">PK</span>prediction_id</td><td>INT</td><td>NOT NULL, AUTO_INCREMENT</td><td>Unique prediction identifier</td></tr>
+      <tr><td><span class="tag tag-fk">FK</span>applicant_id</td><td>INT</td><td>NOT NULL, REFERENCES APPLICANT</td><td>Applicant for whom prediction was made</td></tr>
+      <tr><td>model_name</td><td>VARCHAR(60)</td><td>NOT NULL</td><td>Name of the ML model used</td></tr>
+      <tr><td>approved</td><td>BOOLEAN</td><td>NOT NULL</td><td>True if model predicts approval</td></tr>
+      <tr><td>prob_approved</td><td>DECIMAL(5,4)</td><td>NOT NULL</td><td>Probability of approval (0–1)</td></tr>
+      <tr><td>prob_rejected</td><td>DECIMAL(5,4)</td><td>NOT NULL</td><td>Probability of rejection (0–1)</td></tr>
+      <tr><td>confidence</td><td>VARCHAR(10)</td><td>NOT NULL</td><td>Confidence level: High / Moderate / Low</td></tr>
+      <tr><td>predicted_at</td><td>TIMESTAMP</td><td>DEFAULT NOW()</td><td>Time prediction was generated</td></tr>
+    </tbody>
+  </table>
+
+  <h2>4. Relationship Summary</h2>
+  <table>
+    <thead><tr><th>From Entity</th><th>Relationship</th><th>To Entity</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>APPLICANT</td><td>1 : 1</td><td>FINANCIAL_PROFILE</td><td>Each applicant has exactly one financial profile</td></tr>
+      <tr><td>APPLICANT</td><td>1 : N</td><td>APPLICATION</td><td>An applicant can submit multiple applications over time</td></tr>
+      <tr><td>APPLICANT</td><td>1 : N</td><td>PREDICTION</td><td>An applicant can receive multiple predictions across applications</td></tr>
+      <tr><td>APPLICATION</td><td>N : 1</td><td>PREDICTION</td><td>Each application is linked to one prediction result</td></tr>
+    </tbody>
+  </table>
+
+  <footer>
+    <hr style="border:none;border-top:1px solid #e5e7eb;margin-bottom:12px;"/>
+    Credit Card Approval System &nbsp;|&nbsp; ER Relationship Diagram &nbsp;|&nbsp; Made with IBM Bob
+  </footer>
+</body>
+</html>

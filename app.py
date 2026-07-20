@@ -9,7 +9,7 @@ Routes
 ------
   GET  /            → application form
   POST /predict     → prediction result page
-  GET  /health      → JSON health-check (Watson ML / K8s probe)
+  GET  /health      → JSON health-check (liveness probe)
   POST /api/predict → JSON prediction endpoint
 """
 
@@ -117,7 +117,7 @@ def predict():
 
 @app.route("/health", methods=["GET"])
 def health():
-    return jsonify({"status": "ok", "model": MODEL_NAME, "roc_auc": MODEL_AUC})
+    return jsonify({"status": "ok", "model": MODEL_NAME, "roc_auc": round(MODEL_AUC, 4)})
 
 
 @app.route("/api/predict", methods=["POST"])

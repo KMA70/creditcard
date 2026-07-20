@@ -199,4 +199,3 @@ print(f"  Metadata   : {meta_path}")
 print("\n  -- Summary --")
 summary_df = pd.DataFrame(results).T.sort_values("roc_auc", ascending=False)
 print(summary_df.to_string())
-
